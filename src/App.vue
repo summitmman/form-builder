@@ -6,6 +6,7 @@
       :eventMap="eventMap"
       :reactiveVariableMap="reactiveVariableMap"
     />
+    <input type="text" v-model="singleName" />
   </div>
 </template>
 
@@ -79,20 +80,30 @@ const form: IForm = {
       ]
     },
     {
-      id: 'inputExample',
-      type: 'TextBox',
-      props: {
-        type: 'text',
-        'v-model': '{{ name }}',
-        'v-model:surname': '{{ surname }}',
-        'singleName': '{{ singleName }}'
-      }
-    },
-    {
       id: 'sample',
       type: 'p',
-      children: [
-        'This is the {{ name }} life {{ surname }}'
+      children: [    
+        {
+          id: 'inputExample',
+          type: 'TextBox',
+          props: {
+            type: 'text',
+            'v-model': '{{ name }}',
+            'v-model:surname': '{{ surname }}',
+            'singleName': '{{ singleName }}'
+          }
+        },
+        'This is the {{ name }} life {{ surname }} {{ singleName }}',
+        {
+          id: 'customButton',
+          type: 'Button',
+          events: {
+            click: 'handleAppCustomClick'
+          },
+          children: [
+            'Custom button'
+          ]
+        }
       ]
     }
   ]

@@ -3,28 +3,14 @@
         v-for="(widget, index) in massagedWidgets"
         :key="(typeof widget === 'string' ? widget : widget.id) + index"
     >
-        <DynamicString v-if="typeof widget === 'string'" :str="widget" :reactiveVariableMap="props.reactiveVariableMap" />
-        <component
-            v-else
-            :is="(props.widgetMap && props.widgetMap[widget.type]) ?? widget.type"
-            v-bind="widget.props ?? {}"
-            v-on="widget.events ?? {}"
-        >
-            <FormBuilder
-                v-if="widget.children"
-                :widgets="widget.children"
-                :widgetMap="props.widgetMap"
-                :eventMap="props.eventMap"
-                :reactiveVariableMap="props.reactiveVariableMap"
-            />
-        </component>
+        <FormBuilderRenderer :widget="widget" :widgetMap="$props.widgetMap" :eventMap="$props.eventMap" :reactiveVariableMap="$props.reactiveVariableMap" />
     </template>
 </template>
 <script setup lang="ts">
-import { ComputedRef, Ref, defineProps } from 'vue';
+import { ComputedRef, Ref, defineProps, computed } from 'vue';
 import { Widgets, GenericObject } from './shared/interfaces';
-import DynamicString from './DynamicString.vue';
 import { regex } from './shared/constants';
+import FormBuilderRenderer from './FormBuilderRenderer.vue';
 
 const props = defineProps({
     widgets: {
@@ -46,7 +32,7 @@ const props = defineProps({
 });
 
 // Handle all string to mapped object conversions here; of only current level
-const massagedWidgets: Widgets<string | Function> = props.widgets.map(widget => {
+const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => props.widgets.map(widget => {
     if (typeof widget === 'string') {
         return widget;
     }
@@ -100,7 +86,7 @@ const massagedWidgets: Widgets<string | Function> = props.widgets.map(widget => 
                 const vModelName = vModelComponents[1] ?? 'modelValue';
                 
                 // add prop for v-model
-                widget.props[vModelName] = widget.props[propName].value;
+                widget.props[vModelName] = widget.props[propName];
 
                 // add event for v-model
                 if (!widget.events) {
@@ -115,6 +101,6 @@ const massagedWidgets: Widgets<string | Function> = props.widgets.map(widget => 
     }
 
     return widget;
-});
+}));
 
 </script>
