@@ -8,6 +8,7 @@ This template should help get you started developing with Vue 3 and TypeScript i
 
 - Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
 
+### TODO:
 - [X] Render any html element
 - [X] Render custom vue component
 - [X] Pass props
@@ -16,6 +17,12 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [X] multiple v-model support
 - [X] dynamic text support
 - [X] dynamic props support
+- [ ] manage typeof string dependency
 - [ ] Support IForm to give initial set of ref variables
 - [ ] v-if
 - [ ] v-for
+
+### Findings
+Ref when passed through an object and not directly returned to the template does not get opened by vue
+Hence when vue encounters a variable which is not opened it simply prints the __value which is the value with double quotes
+To resolve this we had to create Renderer components which simply return the ref variables inside the object to the template or open it ourselves using the reactive construct

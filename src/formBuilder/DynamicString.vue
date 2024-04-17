@@ -1,10 +1,13 @@
 <template>
-    <template v-for="(item, index) in sortedKeys" :key="(item.value ?? item) + index">{{ splitStr[item] }}</template>
+    <template v-for="(item, index) in splitStrArr" :key="(item.value ?? item) + index">
+        <DynamicStringRenderer :str="item" />
+    </template>
 </template>
 <script setup lang="ts">
-import { ComputedRef, Ref, computed, reactive } from 'vue';
+import { ComputedRef, Ref, computed } from 'vue';
 import { GenericObject } from './shared/interfaces';
 import { regex } from './shared/constants';
+import DynamicStringRenderer from './DynamicStringRenderer.vue';
 
 const props = defineProps({
     str: {
@@ -18,14 +21,11 @@ const props = defineProps({
 });
 
 let tempStr = props.str;
-// This could not be kept an array because reactive([]) does not work
-// when the ref in the array is printed it includes ""
-const splitStr = reactive<GenericObject<string | Ref | ComputedRef>>({});
-let index = 0;
+const splitStrArr: ComputedRef<Array<string | Ref | ComputedRef>> = computed(() => []);
 while (tempStr) {
     const match = regex.exec(tempStr);
     if (match == null) {
-        splitStr[index++] = tempStr;
+        splitStrArr.value.push(tempStr);
         tempStr = '';
         continue;
     }
@@ -35,13 +35,13 @@ while (tempStr) {
     const end = start + variableStr.length;
 
     if (start > 0) {
-        splitStr[index++] = tempStr.substring(0, start);
+        splitStrArr.value.push(tempStr.substring(0, start));
     }
     const variable = variableStr.replace('{{', '').replace('}}', '').trim();
     if (props.reactiveVariableMap[variable]) {
-        splitStr[index++] = props.reactiveVariableMap[variable];
+        splitStrArr.value.push(props.reactiveVariableMap[variable]);
     } else {
-        splitStr[index++] = variableStr;
+        splitStrArr.value.push(variableStr);
     }
 
     if (end >= tempStr.length) {
@@ -50,7 +50,4 @@ while (tempStr) {
         tempStr = tempStr.substring(end);
     }
 }
-const sortedKeys = computed(() => {
-    return Object.keys(splitStr).sort();
-});
 </script>
