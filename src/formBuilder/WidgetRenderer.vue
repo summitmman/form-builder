@@ -40,5 +40,5 @@ const props = defineProps({
 // Ref when not returned from setup does not get opened through vue
 // Hence when html gets a ref variable it simply prints __value which is with ""
 // Here we are making the object containing refs reactive attempting to open it ourselves
-let tempWidget = reactive(props.widget);
+const tempWidget = reactive(props.widget);
 </script>
