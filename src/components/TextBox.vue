@@ -2,7 +2,7 @@
     <div>
         <input type="text" v-model="name" />
         <input type="text" v-model="surname" />
-        {{ props.singleName }}
+        {{ props.singleName }} {{ name }}
     </div>
 </template>
 <script setup lang="ts">

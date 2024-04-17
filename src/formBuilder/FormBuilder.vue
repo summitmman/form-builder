@@ -3,14 +3,16 @@
         v-for="(widget, index) in massagedWidgets"
         :key="(typeof widget === 'string' ? widget : widget.id) + index"
     >
-        <FormBuilderRenderer :widget="widget" :widgetMap="$props.widgetMap" :eventMap="$props.eventMap" :reactiveVariableMap="$props.reactiveVariableMap" />
+        <DynamicString v-if="typeof widget === 'string'" :str="widget" :reactiveVariableMap="props.reactiveVariableMap" />
+        <WidgetRenderer v-else :widget="widget" :widgetMap="props.widgetMap" :eventMap="props.eventMap" :reactiveVariableMap="props.reactiveVariableMap" />
     </template>
 </template>
 <script setup lang="ts">
 import { ComputedRef, Ref, defineProps, computed } from 'vue';
 import { Widgets, GenericObject } from './shared/interfaces';
 import { regex } from './shared/constants';
-import FormBuilderRenderer from './FormBuilderRenderer.vue';
+import WidgetRenderer from './WidgetRenderer.vue';
+import DynamicString from './DynamicString.vue';
 
 const props = defineProps({
     widgets: {
