@@ -8,12 +8,14 @@ This template should help get you started developing with Vue 3 and TypeScript i
 
 - Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
 
-[X] Render any html element
-[X] Render custom vue component
-[X] Pass props
-[X] Pass events
-[X] v-model support (only supported for custom vue components and not native html ones)
-[X] multiple v-model support
-[X] dynamic text support
-[X] dynamic props support
-[] Support IForm to give initial set of ref variables 
+- [X] Render any html element
+- [X] Render custom vue component
+- [X] Pass props
+- [X] Pass events
+- [X] v-model support (only supported for custom vue components and not native html ones)
+- [X] multiple v-model support
+- [X] dynamic text support
+- [X] dynamic props support
+- [ ] Support IForm to give initial set of ref variables
+- [ ] v-if
+- [ ] v-for
