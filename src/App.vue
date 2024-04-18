@@ -1,7 +1,7 @@
 <template>
   <div>
     <FormBuilder
-      :widgets="form.children"
+      :form="form"
       :widgetMap="widgetMap"
       :eventMap="eventMap"
       :reactiveVariableMap="reactiveVariableMap"
@@ -11,33 +11,36 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, ref } from 'vue';
+import { defineAsyncComponent, ref, Ref, ComputedRef } from 'vue';
 import FormBuilder from './formBuilder/FormBuilder.vue';
-import { IForm } from './formBuilder/shared/interfaces';
+import { IForm, GenericObject, EventMap } from './formBuilder/shared/interfaces';
 
+const singleName = ref('optical fiber');
 const widgetMap = {
   Button: defineAsyncComponent(() => import(/* webpackChunkName: "Button" */ './components/Button.vue')),
   TextBox: defineAsyncComponent(() => import(/* webpackChunkName: "TextBox" */ './components/TextBox.vue'))
 };
-const eventMap = {
+const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>): GenericObject<Function> => ({
   handleAppClick: () => {
     alert('Hello World');
   },
   handleAppCustomClick: () => {
-    alert('custom button alert');
+    alert(`custom button alert ${ reactiveVariables.name?.value }`);
+  },
+  handleChange: (val: any) => {
+    console.log('SUMIT LOG', val, reactiveVariables.surname?.value);
   }
-};
-const name = ref<string>('Hello');
-const surname = ref<string>('World');
-const singleName = ref('optical fiber');
+});
 const reactiveVariableMap = {
-  name,
-  surname,
   singleName
 };
 
 const form: IForm = {
   id: 'sample-form',
+  initialData: {
+    name: 'Hello',
+    surname: 'World'
+  },
   children: [
     {
       id: 'el1',
@@ -91,6 +94,9 @@ const form: IForm = {
             'v-model': '{{ name }}',
             'v-model:surname': '{{ surname }}',
             'singleName': '{{ singleName }}'
+          },
+          events: {
+            change: 'handleChange'
           }
         },
         'This is the {{ name }} life {{ surname }} {{ singleName }}',

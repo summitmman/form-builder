@@ -17,9 +17,9 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [X] multiple v-model support
 - [X] dynamic text support
 - [X] dynamic props support
-- [ ] manage typeof string dependency
-- [ ] Support IForm to give initial set of ref variables
-- [ ] Functions to have access to these ref variables
+- [X] manage typeof string dependency
+- [X] Support IForm to give initial set of ref variables
+- [X] Functions to have access to these ref variables
 - [ ] v-if
 - [ ] v-for
 
