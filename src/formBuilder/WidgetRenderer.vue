@@ -4,7 +4,7 @@
         v-bind="widgetProps"
         v-on="widgetEvents"
     >
-        <FormBuilder
+        <WidgetsRenderer
             v-if="props.widget.children"
             :widgets="props.widget.children"
             :widgetMap="props.widgetMap"
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { Ref, ComputedRef, reactive } from 'vue';
 import { IWidget, GenericObject } from './shared/interfaces';
-import FormBuilder from './FormBuilder.vue';
+import WidgetsRenderer from './WidgetsRenderer.vue';
 const props = defineProps({
     widget: {
         type: Object as () => IWidget<Function | string>,
