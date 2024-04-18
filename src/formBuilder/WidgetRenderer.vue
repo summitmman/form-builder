@@ -1,8 +1,8 @@
 <template>
     <component
         :is="props.widgetMap[props.widget.type] ?? props.widget.type"
-        v-bind="tempWidget.props ?? {}"
-        v-on="tempWidget.events ?? {}"
+        v-bind="widgetProps"
+        v-on="widgetEvents"
     >
         <FormBuilder
             v-if="props.widget.children"
@@ -40,5 +40,7 @@ const props = defineProps({
 // Ref when not returned from setup does not get opened through vue
 // Hence when html gets a ref variable it simply prints __value which is with ""
 // Here we are making the object containing refs reactive attempting to open it ourselves
-const tempWidget = reactive(props.widget);
+// const tempWidget = reactive(props.widget);
+const widgetProps = reactive(props.widget.props ?? {});
+const widgetEvents = reactive(props.widget.events ?? {});
 </script>
