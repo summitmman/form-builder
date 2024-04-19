@@ -4,15 +4,17 @@
         :key="(typeof widget === 'string' ? widget : widget.id) + index"
     >
         <DynamicString v-if="typeof widget === 'string'" :str="widget" :reactiveVariableMap="props.reactiveVariableMap" />
-        <WidgetRenderer v-else :widget="widget" :widgetMap="props.widgetMap" :eventMap="props.eventMap" :reactiveVariableMap="props.reactiveVariableMap" />
+        <WidgetRenderer v-else :widget="widget" :widgetMap="localWidgetMap" :eventMap="props.eventMap" :reactiveVariableMap="props.reactiveVariableMap" />
     </template>
 </template>
 <script setup lang="ts">
-import { ComputedRef, Ref, computed } from 'vue';
+import { ComputedRef, Ref, computed, defineAsyncComponent } from 'vue';
 import { Widgets, GenericObject } from './shared/interfaces';
 import { regex } from './shared/constants';
 import WidgetRenderer from './WidgetRenderer.vue';
-import DynamicString from './DynamicString.vue';
+
+const DynamicString = defineAsyncComponent(() => import(/* webpackChunkName: "DynamicString" */ './DynamicString.vue'));
+const VIf = defineAsyncComponent(() => import(/* webpackChunkName: "VIf" */ './VIf.vue'));
 
 const props = defineProps({
     widgets: {
@@ -32,6 +34,11 @@ const props = defineProps({
         default: () => {}
     }
 });
+
+const localWidgetMap = computed(() => ({
+    ...props.widgetMap,
+    'v-if': VIf
+}));
 
 // Handle all string to mapped object conversions here; of only current level
 const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => props.widgets.map(widget => {
@@ -77,6 +84,8 @@ const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => 
                             const variable = match[0].replace('{{', '').replace('}}', '').trim();
                             if (props.reactiveVariableMap[variable]) {
                                 widget.props[propName] = props.reactiveVariableMap[variable];
+                            } else if (props.eventMap[variable]) {
+                                widget.props[propName] = props.eventMap[variable];
                             }
                         }
                     }
@@ -100,6 +109,18 @@ const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => 
                 };
             }
         });
+    }
+
+    // Provide default props for internal components
+    // v-if
+    if (widget.type === 'v-if') {
+        if (!widget.props) {
+            widget.props = {};
+        }
+        widget.props.widgetMap = localWidgetMap.value;
+        widget.props.eventMap = props.eventMap;
+        widget.props.reactiveVariableMap = props.reactiveVariableMap;
+        console.log('v-if initialized', widget);
     }
 
     return widget;

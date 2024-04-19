@@ -21,7 +21,6 @@ const props = defineProps({
     widget: {
         type: Object as () => IWidget<Function | string>,
         default: () => {},
-
     },
     widgetMap: {
         type: Object as () => GenericObject,

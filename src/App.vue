@@ -6,12 +6,15 @@
       :eventMap="eventMap"
       :reactiveVariableMap="reactiveVariableMap"
     />
-    <input type="text" v-model="singleName" />
+    <div>
+      Outside form builder
+      <input type="text" v-model="singleName" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, ref, Ref, ComputedRef } from 'vue';
+import { defineAsyncComponent, ref, Ref, ComputedRef, computed } from 'vue';
 import FormBuilder from './formBuilder/FormBuilder.vue';
 import { IForm, GenericObject, EventMap } from './formBuilder/shared/interfaces';
 
@@ -29,10 +32,14 @@ const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>)
   },
   handleChange: (val: any) => {
     console.log('SUMIT LOG', val, reactiveVariables.surname?.value);
+  },
+  singleNameLengthFn: () => {
+    return reactiveVariables.singleNameLength?.value;
   }
 });
 const reactiveVariableMap = {
-  singleName
+  singleName,
+  singleNameLength: computed(() => singleName.value.length)
 };
 
 const form: IForm = {
@@ -110,6 +117,31 @@ const form: IForm = {
             'Custom button'
           ]
         }
+      ]
+    },
+    {
+      id: 'condition',
+      type: 'v-if',
+      props: {
+        condition: '{{ singleNameLength }}',
+        vElseChildren: [
+          {
+            id: 'conditioninner',
+            type: 'v-if',
+            props: {
+              condition: '{{ name }}',
+              vElseChildren: [
+                'This text shows when both singleNameLength and name are invalid'
+              ]
+            },
+            children: [
+              'This text only shows when singleNameLength is invalid and name: {{ name }} is valid'
+            ]
+          }
+        ]
+      },
+      children: [
+        'This text only shows when singleNameLength: {{ singleNameLength }} is a valid',
       ]
     }
   ]
