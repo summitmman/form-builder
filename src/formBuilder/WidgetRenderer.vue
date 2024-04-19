@@ -1,8 +1,8 @@
 <template>
     <component
-        :is="props.widgetMap[props.widget.type] ?? props.widget.type"
-        v-bind="widgetProps"
-        v-on="widgetEvents"
+        :is="props.widgetMap[props.widget.type ?? ''] ?? props.widget.type"
+        v-bind="propsBindings"
+        v-on="props.widget.events ?? {}"
     >
         <WidgetsRenderer
             v-if="props.widget.children"
@@ -13,33 +13,51 @@
         />
     </component>
 </template>
-<script setup lang="ts">
-import { Ref, ComputedRef, reactive } from 'vue';
+<script lang="ts">
+import { Ref, ComputedRef, defineAsyncComponent, defineComponent } from 'vue';
 import { IWidget, GenericObject } from './shared/interfaces';
-import WidgetsRenderer from './WidgetsRenderer.vue';
-const props = defineProps({
-    widget: {
-        type: Object as () => IWidget<Function | string>,
-        default: () => {},
+
+// Could not use setup sugar here because we need to spread the widget.props when exposing to template
+// as only then can the refs be opened
+export default defineComponent({
+    props: {
+        widget: {
+            type: Object as () => IWidget<Function | string>,
+            default: () => {},
+        },
+        widgetMap: {
+            type: Object as () => GenericObject,
+            default: () => {}
+        },
+        eventMap: {
+            type: Object as () => GenericObject<Function>,
+            default: () => {}
+        },
+        reactiveVariableMap: {
+            type: Object as () => GenericObject<Ref | ComputedRef>,
+            default: () => {}
+        }
     },
-    widgetMap: {
-        type: Object as () => GenericObject,
-        default: () => {}
+    components: {
+        WidgetsRenderer: defineAsyncComponent(() => import(/* webpackChunkName: "WidgetsRenderer" */ './WidgetsRenderer.vue'))
     },
-    eventMap: {
-        type: Object as () => GenericObject<Function>,
-        default: () => {}
-    },
-    reactiveVariableMap: {
-        type: Object as () => GenericObject<Ref | ComputedRef>,
-        default: () => {}
+    setup(props) {
+        return {
+            props,
+            ...props.widget.props,
+            // After spreading the props, now we need to prepare the opened ref ready variables for v-bind
+            // we know we need to use everything except props and the getter itself
+            get propsBindings(): GenericObject {
+                const output: GenericObject = {};
+                // this refers to the returned object
+                Object.keys(this).forEach(key => {
+                    if (key !== 'propsBindings' && key !== 'props') {
+                        output[key] = (this as any)[key];
+                    }
+                });
+                return output;
+            }
+        };
     }
 });
-// This component was needed to resolve the ref issue
-// Ref when not returned from setup does not get opened through vue
-// Hence when html gets a ref variable it simply prints __value which is with ""
-// Here we are making the object containing refs reactive attempting to open it ourselves
-// const tempWidget = reactive(props.widget);
-const widgetProps = reactive(props.widget.props ?? {});
-const widgetEvents = reactive(props.widget.events ?? {});
 </script>

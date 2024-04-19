@@ -38,5 +38,4 @@ const props = defineProps({
         default: () => {}
     }
 });
-console.log('vElseChildren', props.vElseChildren);
 </script>

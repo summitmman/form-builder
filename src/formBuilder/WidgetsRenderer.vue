@@ -120,7 +120,6 @@ const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => 
         widget.props.widgetMap = localWidgetMap.value;
         widget.props.eventMap = props.eventMap;
         widget.props.reactiveVariableMap = props.reactiveVariableMap;
-        console.log('v-if initialized', widget);
     }
 
     return widget;

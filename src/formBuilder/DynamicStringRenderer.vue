@@ -10,10 +10,7 @@ const props = defineProps({
         default: ''
     }
 });
+// This is needed so that we can directly expose the str reactive variable
+// so that vue can open it
 let tempStr = props.str;
-// This code is not needed because tempStr is itself getting returned to template
-// Hence resolving the ref issue
-// if (typeof props.str !== 'string') {
-//     tempStr = reactive(props.str);
-// }
 </script>
