@@ -8,10 +8,12 @@
     </template>
 </template>
 <script setup lang="ts">
-import { ComputedRef, Ref, computed, defineAsyncComponent } from 'vue';
+import { ComputedRef, Ref, computed, defineAsyncComponent, isRef } from 'vue';
+import _get from 'lodash.get';
 import { Widgets, GenericObject } from './shared/interfaces';
 import { regex } from './shared/constants';
 import WidgetRenderer from './WidgetRenderer.vue';
+import { getVariableAndParts } from './shared/utils';
 
 const DynamicString = defineAsyncComponent(() => import(/* webpackChunkName: "DynamicString" */ './DynamicString.vue'));
 const VIf = defineAsyncComponent(() => import(/* webpackChunkName: "VIf" */ './VIf.vue'));
@@ -83,11 +85,19 @@ const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => 
                     const match = regex.exec(value);
                     if (match) {
                         if (match.index === 0 && match[0].length === value.length) {
-                            const variable = match[0].replace('{{', '').replace('}}', '').trim();
-                            if (props.reactiveVariableMap[variable]) {
-                                widget.props[propName] = props.reactiveVariableMap[variable];
-                            } else if (props.eventMap[variable]) {
-                                widget.props[propName] = props.eventMap[variable];
+                            const { variablePart, theRest } = getVariableAndParts(match[0]);
+                            if (props.reactiveVariableMap[variablePart] != null) {
+                                if (theRest) {
+                                    if (isRef(props.reactiveVariableMap[variablePart])) {
+                                        widget.props[propName] = _get(props.reactiveVariableMap[variablePart].value, theRest);
+                                    } else {
+                                        widget.props[propName] = _get(props.reactiveVariableMap[variablePart], theRest);
+                                    }
+                                }
+                                else
+                                    widget.props[propName] = props.reactiveVariableMap[variablePart];
+                            } else if (props.eventMap[variablePart]) {
+                                widget.props[propName] = props.eventMap[variablePart];
                             }
                         }
                     }

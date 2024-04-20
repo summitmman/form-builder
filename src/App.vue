@@ -163,7 +163,7 @@ const form: IForm = {
           id: 'temp',
           type: 'div',
           children: [
-            'This is element {{ item }} at position {{ index }} : {{ name }}'
+            'This is element {{ item.name }} at position {{ index }} : {{ name }}'
           ]
         }
       ]

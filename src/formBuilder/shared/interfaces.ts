@@ -17,3 +17,8 @@ export interface IForm {
     initialData?: GenericObject;
     children: Widgets<string>;
 }
+
+export interface IVariableParts {
+    variablePart: string;
+    theRest: string;
+}

@@ -4,10 +4,12 @@
     </template>
 </template>
 <script setup lang="ts">
-import { ComputedRef, Ref, computed } from 'vue';
+import { ComputedRef, Ref, computed, isRef } from 'vue';
+import _get from 'lodash.get';
 import { GenericObject } from './shared/interfaces';
 import { regex } from './shared/constants';
 import DynamicStringRenderer from './DynamicStringRenderer.vue';
+import { getVariableAndParts } from './shared/utils';
 
 const props = defineProps({
     str: {
@@ -37,9 +39,21 @@ while (tempStr) {
     if (start > 0) {
         splitStrArr.value.push(tempStr.substring(0, start));
     }
-    const variable = variableStr.replace('{{', '').replace('}}', '').trim();
-    if (props.reactiveVariableMap[variable] != null) {
-        splitStrArr.value.push(props.reactiveVariableMap[variable]);
+    const { variablePart, theRest } = getVariableAndParts(variableStr);
+    if (props.reactiveVariableMap[variablePart] != null) {
+        if (theRest) {
+            if (isRef(props.reactiveVariableMap[variablePart])) {
+                splitStrArr.value.push(
+                    _get(props.reactiveVariableMap[variablePart].value, theRest)
+                );
+            } else {
+                splitStrArr.value.push(
+                    _get(props.reactiveVariableMap[variablePart], theRest)
+                );
+            }
+        }
+        else
+            splitStrArr.value.push(props.reactiveVariableMap[variablePart]);
     } else {
         splitStrArr.value.push(variableStr);
     }

@@ -21,7 +21,12 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [X] Support IForm to give initial set of ref variables
 - [X] Functions to have access to these ref variables
 - [X] v-if
-- [ ] v-for
+- [X] v-for
+- [ ] v-show
+- [X] nested ref variables in template
+- [ ] check need for id
+- [ ] make things presentable
+
 
 ### Findings
 Ref when passed through an object and not directly returned to the template does not get opened by vue
