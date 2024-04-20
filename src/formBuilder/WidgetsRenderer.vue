@@ -1,7 +1,7 @@
 <template>
     <template
         v-for="(widget, index) in massagedWidgets"
-        :key="(typeof widget === 'string' ? widget : widget.id) + index"
+        :key="(typeof widget === 'string' ? widget : widget.id + widget.type) + index"
     >
         <DynamicString v-if="typeof widget === 'string'" :str="widget" :reactiveVariableMap="props.reactiveVariableMap" />
         <WidgetRenderer v-else :widget="widget" :widgetMap="localWidgetMap" :eventMap="props.eventMap" :reactiveVariableMap="props.reactiveVariableMap" />

@@ -22,9 +22,9 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [X] Functions to have access to these ref variables
 - [X] v-if
 - [X] v-for
-- [ ] v-show
+- [X] loop variables accessibility
 - [X] nested ref variables in template
-- [ ] check need for id
+- [X] check need for id
 - [ ] make things presentable
 
 

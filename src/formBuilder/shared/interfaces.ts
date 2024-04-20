@@ -5,7 +5,7 @@ export type Widgets<T = Function> = Array<IWidget<T> | string>;
 export type EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>) => GenericObject<Function>
 
 export interface IWidget<T = Function> {
-    id: string;
+    id?: string;
     type: string;
     props?: GenericObject;
     events?: GenericObject<T>;

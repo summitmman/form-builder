@@ -58,7 +58,6 @@ const form: IForm = {
   },
   children: [
     {
-      id: 'el1',
       type: 'div',
       props: {
         class: 'my-div'
@@ -66,7 +65,6 @@ const form: IForm = {
       children: [
         'Hello World',
         {
-          id: 'nestedEl3',
           type: 'button',
           events: {
             click: 'handleAppClick'
@@ -78,7 +76,6 @@ const form: IForm = {
       ]
     },
     {
-      id: 'el2',
       type: 'button',
       events: {
         click: 'handleAppClick'
@@ -98,11 +95,9 @@ const form: IForm = {
       ]
     },
     {
-      id: 'sample',
       type: 'p',
       children: [    
         {
-          id: 'inputExample',
           type: 'TextBox',
           props: {
             type: 'text',
@@ -116,7 +111,6 @@ const form: IForm = {
         },
         'This is the {{ name }} life {{ surname }} {{ singleName }}',
         {
-          id: 'customButton',
           type: 'Button',
           events: {
             click: 'handleAppCustomClick'
@@ -128,13 +122,11 @@ const form: IForm = {
       ]
     },
     {
-      id: 'condition',
       type: 'v-if',
       props: {
         condition: '{{ singleNameLength }}',
         vElseChildren: [
           {
-            id: 'conditioninner',
             type: 'v-if',
             props: {
               condition: '{{ name }}',
@@ -153,17 +145,16 @@ const form: IForm = {
       ]
     },
     {
-      id: 'looping',
       type: 'v-for',
       props: {
+        id: 'looping',
         loopOn: '{{ cities }}'
       },
       children: [
         {
-          id: 'temp',
           type: 'div',
           children: [
-            'This is element {{ item.name }} at position {{ index }} : {{ name }}'
+            'This is element {{ loopingItem.name }} at position {{ loopingIndex }} : {{ name }}'
           ]
         }
       ]
