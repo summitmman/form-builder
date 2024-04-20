@@ -6,7 +6,7 @@ import { ComputedRef, Ref } from 'vue';
 
 const props = defineProps({
     str: {
-        type: [String, Object as () => Ref | ComputedRef],
+        type: [String, Number, Boolean, Object as () => Ref | ComputedRef],
         default: ''
     }
 });

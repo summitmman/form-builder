@@ -20,7 +20,7 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [X] manage typeof string dependency
 - [X] Support IForm to give initial set of ref variables
 - [X] Functions to have access to these ref variables
-- [ ] v-if
+- [X] v-if
 - [ ] v-for
 
 ### Findings

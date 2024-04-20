@@ -39,7 +39,15 @@ const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>)
 });
 const reactiveVariableMap = {
   singleName,
-  singleNameLength: computed(() => singleName.value.length)
+  singleNameLength: computed(() => singleName.value.length),
+  cities: ref([
+    {
+      name: 'Mumbai',
+    },
+    {
+      name: 'Bengaluru'
+    }
+  ])
 };
 
 const form: IForm = {
@@ -142,6 +150,22 @@ const form: IForm = {
       },
       children: [
         'This text only shows when singleNameLength: {{ singleNameLength }} is a valid',
+      ]
+    },
+    {
+      id: 'looping',
+      type: 'v-for',
+      props: {
+        loopOn: '{{ cities }}'
+      },
+      children: [
+        {
+          id: 'temp',
+          type: 'div',
+          children: [
+            'This is element {{ item }} at position {{ index }} : {{ name }}'
+          ]
+        }
       ]
     }
   ]

@@ -38,7 +38,7 @@ while (tempStr) {
         splitStrArr.value.push(tempStr.substring(0, start));
     }
     const variable = variableStr.replace('{{', '').replace('}}', '').trim();
-    if (props.reactiveVariableMap[variable]) {
+    if (props.reactiveVariableMap[variable] != null) {
         splitStrArr.value.push(props.reactiveVariableMap[variable]);
     } else {
         splitStrArr.value.push(variableStr);

@@ -15,6 +15,7 @@ import WidgetRenderer from './WidgetRenderer.vue';
 
 const DynamicString = defineAsyncComponent(() => import(/* webpackChunkName: "DynamicString" */ './DynamicString.vue'));
 const VIf = defineAsyncComponent(() => import(/* webpackChunkName: "VIf" */ './VIf.vue'));
+const VFor = defineAsyncComponent(() => import(/* webpackChunkName: "VFor" */ './VFor.vue'));
 
 const props = defineProps({
     widgets: {
@@ -37,7 +38,8 @@ const props = defineProps({
 
 const localWidgetMap = computed(() => ({
     ...props.widgetMap,
-    'v-if': VIf
+    'v-if': VIf,
+    'v-for': VFor
 }));
 
 // Handle all string to mapped object conversions here; of only current level
@@ -117,6 +119,16 @@ const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => 
         if (!widget.props) {
             widget.props = {};
         }
+        widget.props.widgetMap = localWidgetMap.value;
+        widget.props.eventMap = props.eventMap;
+        widget.props.reactiveVariableMap = props.reactiveVariableMap;
+    }
+    // v-for
+    if (widget.type === 'v-for') {
+        if (!widget.props) {
+            widget.props = {};
+        }
+        widget.props.loopChildren = widget.children;
         widget.props.widgetMap = localWidgetMap.value;
         widget.props.eventMap = props.eventMap;
         widget.props.reactiveVariableMap = props.reactiveVariableMap;
