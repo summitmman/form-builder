@@ -55,7 +55,10 @@ const form: IForm = {
         subtitle: 'Finally build AI bots which will help rule the world',
         icon: '/img/robotics.png'
       }
-    ]
+    ],
+    cities: ['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming'],
+    city: null
+
   },
   children: [
     {
@@ -165,6 +168,42 @@ const form: IForm = {
                             placeholder: 'Please enter your name',
                             label: 'Your name'
                           }
+                        },
+                        {
+                          type: 'v-select',
+                          props: {
+                            label: 'Select City',
+                            items: '{{ cities }}',
+                            'v-model': '{{ city }}',
+                            hint: '{{ city }}',
+                            'persistent-hint': true,
+                          }
+                        },
+                        {
+                          type: 'v-radio-group',
+                          props: {
+                            'v-model': '{{ city }}',
+                            hint: '{{ city }}',
+                            'persistent-hint': true
+                          },
+                          children: [
+                            {
+                              type: 'v-for',
+                              props: {
+                                id: 'cities',
+                                loopOn: '{{ cities }}'
+                              },
+                              children: [
+                                {
+                                  type: 'v-radio',
+                                  props: {
+                                    label: '{{ citiesItem }}',
+                                    value: '{{ citiesItem }}'
+                                  }
+                                }
+                              ]
+                            }
+                          ]
                         },
                         {
                           type: 'v-card-actions',
