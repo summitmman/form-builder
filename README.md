@@ -25,7 +25,8 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [X] loop variables accessibility
 - [X] nested ref variables in template
 - [X] check need for id
-- [ ] make things presentable
+- [X] make things presentable; add a demo page
+- [ ] manage reactive in props with string as well
 
 
 ### Findings
