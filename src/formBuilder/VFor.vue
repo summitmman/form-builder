@@ -1,12 +1,12 @@
 <template>
-    <template v-for="(item, index) in props.loopOn">
-        <WidgetsRenderer
-            :widgets="props.loopChildren"
-            :widgetMap="props.widgetMap"
-            :eventMap="props.eventMap"
-            :reactiveVariableMap="{ ...props.reactiveVariableMap, [props.id + 'Item']: item, [props.id + 'Index']: index }"
-        />
-    </template>
+    <WidgetsRenderer
+        v-for="(item, index) in props.loopOn"
+        :key="props.id + 'item' + index"
+        :widgets="getNewLoopChildren()"
+        :widgetMap="props.widgetMap"
+        :eventMap="props.eventMap"
+        :reactiveVariableMap="{ ...props.reactiveVariableMap, [props.id + 'Item']: item, [props.id + 'Index']: index }"
+    />
 </template>
 <script setup lang="ts">
 import { Ref, ComputedRef, defineAsyncComponent } from 'vue';
@@ -40,4 +40,6 @@ const props = defineProps({
         default: () => {}
     }
 });
+
+const getNewLoopChildren = () => JSON.parse(JSON.stringify(props.loopChildren));
 </script>
