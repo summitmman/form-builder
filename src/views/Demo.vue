@@ -163,7 +163,7 @@ const form: IForm = {
                           type: 'v-text-field',
                           props: {
                             'v-model': '{{ name }}',
-                            hint: '{{ nameHint }}',
+                            hint: 'You have entered : "{{ name }}"; Thats what you entered',
                             'persistent-hint': true,
                             placeholder: 'Please enter your name',
                             label: 'Your name'

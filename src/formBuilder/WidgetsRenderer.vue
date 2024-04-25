@@ -99,6 +99,55 @@ const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => 
                             } else if (props.eventMap[variablePart]) {
                                 widget.props[propName] = props.eventMap[variablePart];
                             }
+                        } else {
+                            let tempStr = value;
+                            const splitStrArr: Array<string | { rVar: Ref | ComputedRef, theRest: string}> = [];
+                            while (tempStr) {
+                                const match = regex.exec(tempStr);
+                                if (match == null) {
+                                    splitStrArr.push(tempStr);
+                                    tempStr = '';
+                                    continue;
+                                }
+
+                                const variableStr = match[0];
+                                const start = match.index;
+                                const end = start + variableStr.length;
+
+                                if (start > 0) {
+                                    splitStrArr.push(tempStr.substring(0, start));
+                                }
+                                const { variablePart, theRest } = getVariableAndParts(variableStr);
+                                if (props.reactiveVariableMap[variablePart] != null) {
+                                    splitStrArr.push({
+                                        rVar: props.reactiveVariableMap[variablePart],
+                                        theRest
+                                    });
+                                } else {
+                                    splitStrArr.push(variableStr);
+                                }
+
+                                if (end >= tempStr.length) {
+                                    tempStr = '';
+                                } else {
+                                    tempStr = tempStr.substring(end);
+                                }
+                            }
+                            widget.props[propName] = computed(() => {
+                                return splitStrArr.reduce((str, item) => {
+                                    if (typeof item === 'string') {
+                                        return str + item;
+                                    } else {
+                                        const { rVar, theRest } = item;
+                                        if (theRest) {
+                                            str += _get(rVar.value, theRest);
+                                        } else {
+                                            str += rVar.value;
+                                        }
+                                        return str;
+                                    }
+                                }, '');
+                            });
                         }
                     }
                 }
