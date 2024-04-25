@@ -211,7 +211,8 @@ const form: IForm = {
                             {
                               type: 'v-btn',
                               props: {
-                                variant: 'tonal'
+                                variant: 'tonal',
+                                color: 'primary'
                               },
                               events: {
                                 click: 'sayHi'
@@ -289,12 +290,20 @@ const form: IForm = {
   position: relative;
 }
 .banner-text {
-  position: absolute;
+  /* position: absolute;
   color: white;
   top: calc(50% - 47px);
   text-align: center;
   width: 100%;
   font-family: Dosis;
-  font-size: 60px;
+  font-size: 60px; */
+
+  position: absolute;
+  color: white;
+  top: calc(50% - (-4px) - (0.5* 60px));
+  text-align: center;
+  width: 100%;
+  font-family: Dosis;
+  font-size: calc(0.5 * 60px);
 }
 </style>
