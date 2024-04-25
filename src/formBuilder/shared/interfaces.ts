@@ -22,3 +22,5 @@ export interface IVariableParts {
     variablePart: string;
     theRest: string;
 }
+
+export type DynamicStringSplit = Array<string | { rVar: Ref | ComputedRef, theRest: string} | Function>;

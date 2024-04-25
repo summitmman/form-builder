@@ -1,8 +1,8 @@
 <template>
     <div>
-        <input type="text" v-model="name" @input="handleChange" />
-        <input type="text" v-model="surname" />
-        {{ props.singleName }} {{ name }}
+        <input class="native-input" type="text" v-model="name" @input="handleChange" />
+        <input class="native-input" type="text" v-model="surname" />
+        <div>{{ props.singleName }} {{ name }}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -19,3 +19,8 @@
         emit('change', name.value);
     };
 </script>
+<style scoped>
+.native-input {
+    border-style: solid;
+}
+</style>

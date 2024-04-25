@@ -12,5 +12,8 @@ const handleClick = (event: MouseEvent): void => {
 .btn {
     padding: 10px;
     border-radius: 4px;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
 }
 </style>

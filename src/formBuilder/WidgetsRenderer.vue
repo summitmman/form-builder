@@ -10,10 +10,10 @@
 <script setup lang="ts">
 import { ComputedRef, Ref, computed, defineAsyncComponent, isRef } from 'vue';
 import _get from 'lodash.get';
-import { Widgets, GenericObject } from './shared/interfaces';
+import { Widgets, GenericObject, DynamicStringSplit } from './shared/interfaces';
 import { regex } from './shared/constants';
 import WidgetRenderer from './WidgetRenderer.vue';
-import { getVariableAndParts } from './shared/utils';
+import { getVariableAndParts, splitDynamicStr } from './shared/utils';
 
 const DynamicString = defineAsyncComponent(() => import(/* webpackChunkName: "DynamicString" */ './DynamicString.vue'));
 const VIf = defineAsyncComponent(() => import(/* webpackChunkName: "VIf" */ './VIf.vue'));
@@ -84,68 +84,41 @@ const massagedWidgets: ComputedRef<Widgets<string | Function>> = computed(() => 
                 if (typeof value === 'string') {
                     const match = regex.exec(value);
                     if (match) {
-                        if (match.index === 0 && match[0].length === value.length) {
-                            const { variablePart, theRest } = getVariableAndParts(match[0]);
-                            if (props.reactiveVariableMap[variablePart] != null) {
+                        const splitStrArr: DynamicStringSplit = splitDynamicStr(value, props.reactiveVariableMap);
+                        if (splitStrArr.length === 1) {
+                            const item = splitStrArr[0];
+                            if (typeof item !== 'string' && typeof item !== 'function') {
+                                const { rVar, theRest } = item;
                                 if (theRest) {
-                                    if (isRef(props.reactiveVariableMap[variablePart])) {
-                                        widget.props[propName] = _get(props.reactiveVariableMap[variablePart].value, theRest);
+                                    if (isRef(rVar)) {
+                                        widget.props[propName] = _get(rVar.value, theRest);
                                     } else {
-                                        widget.props[propName] = _get(props.reactiveVariableMap[variablePart], theRest);
+                                        widget.props[propName] = _get(rVar, theRest);
                                     }
                                 }
                                 else
-                                    widget.props[propName] = props.reactiveVariableMap[variablePart];
-                            } else if (props.eventMap[variablePart]) {
-                                widget.props[propName] = props.eventMap[variablePart];
+                                    widget.props[propName] = rVar;
+                            } else {
+                                widget.props[propName] = item;
                             }
                         } else {
-                            let tempStr = value;
-                            const splitStrArr: Array<string | { rVar: Ref | ComputedRef, theRest: string}> = [];
-                            while (tempStr) {
-                                const match = regex.exec(tempStr);
-                                if (match == null) {
-                                    splitStrArr.push(tempStr);
-                                    tempStr = '';
-                                    continue;
-                                }
-
-                                const variableStr = match[0];
-                                const start = match.index;
-                                const end = start + variableStr.length;
-
-                                if (start > 0) {
-                                    splitStrArr.push(tempStr.substring(0, start));
-                                }
-                                const { variablePart, theRest } = getVariableAndParts(variableStr);
-                                if (props.reactiveVariableMap[variablePart] != null) {
-                                    splitStrArr.push({
-                                        rVar: props.reactiveVariableMap[variablePart],
-                                        theRest
-                                    });
-                                } else {
-                                    splitStrArr.push(variableStr);
-                                }
-
-                                if (end >= tempStr.length) {
-                                    tempStr = '';
-                                } else {
-                                    tempStr = tempStr.substring(end);
-                                }
-                            }
                             widget.props[propName] = computed(() => {
                                 return splitStrArr.reduce((str, item) => {
-                                    if (typeof item === 'string') {
-                                        return str + item;
-                                    } else {
-                                        const { rVar, theRest } = item;
-                                        if (theRest) {
-                                            str += _get(rVar.value, theRest);
-                                        } else {
-                                            str += rVar.value;
-                                        }
+                                    if (typeof item === 'function') {
                                         return str;
                                     }
+
+                                    if (typeof item === 'string') {
+                                        return str + item;
+                                    }
+
+                                    const { rVar, theRest } = item;
+                                    if (theRest) {
+                                        str += _get(rVar.value, theRest);
+                                    } else {
+                                        str += rVar.value;
+                                    }
+                                    return str;
                                 }, '');
                             });
                         }

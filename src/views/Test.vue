@@ -8,7 +8,8 @@
       />
       <div>
         Outside form builder
-        <input type="text" v-model="singleName" />
+        <input type="text" class="random-native-input block" v-model="singleName" />
+        {{ singleName }}
       </div>
     </div>
   </template>
@@ -66,6 +67,9 @@
           'Hello World',
           {
             type: 'button',
+            props: {
+              class: 'native-btn ml-4'
+            },
             events: {
               click: 'handleAppClick'
             },
@@ -77,6 +81,9 @@
       },
       {
         type: 'button',
+        props: {
+          class: 'native-btn'
+        },
         events: {
           click: 'handleAppClick'
         },
@@ -96,6 +103,9 @@
       },
       {
         type: 'p',
+        props: {
+          class: 'mt-5'
+        },
         children: [    
           {
             type: 'TextBox',
@@ -112,6 +122,9 @@
           'This is the {{ name }} life {{ surname }} {{ singleName }}',
           {
             type: 'Button',
+            props: {
+              class: 'block'
+            },
             events: {
               click: 'handleAppCustomClick'
             },
@@ -122,43 +135,71 @@
         ]
       },
       {
-        type: 'v-if',
+        type: 'div',
         props: {
-          condition: '{{ singleNameLength }}',
-          vElseChildren: [
-            {
-              type: 'v-if',
-              props: {
-                condition: '{{ name }}',
-                vElseChildren: [
-                  'This text shows when both singleNameLength and name are invalid'
-                ]
-              },
-              children: [
-                'This text only shows when singleNameLength is invalid and name: {{ name }} is valid'
-              ]
-            }
-          ]
-        },
-        children: [
-          'This text only shows when singleNameLength: {{ singleNameLength }} is a valid',
-        ]
-      },
-      {
-        type: 'v-for',
-        props: {
-          id: 'looping',
-          loopOn: '{{ cities }}'
+          class: 'my-div'
         },
         children: [
           {
-            type: 'div',
+            type: 'h3',
             children: [
-              'This is element {{ loopingItem.name }} at position {{ loopingIndex }} : {{ name }}'
+              'v-if example',
+            ]
+          },
+          {
+            type: 'v-if',
+            props: {
+              condition: '{{ singleNameLength }}',
+              vElseChildren: [
+                {
+                  type: 'v-if',
+                  props: {
+                    condition: '{{ name }}',
+                    vElseChildren: [
+                      'This text shows when both singleNameLength and name are invalid'
+                    ]
+                  },
+                  children: [
+                    'This text only shows when singleNameLength is invalid and name: {{ name }} is valid'
+                  ]
+                }
+              ]
+            },
+            children: [
+              'This text only shows when singleNameLength: {{ singleNameLength }} is a valid',
+            ]
+          },
+        ]
+      },
+      {
+        type: 'div',
+        props: {
+          class: 'my-div'
+        },
+        children: [
+          {
+            type: 'h3',
+            children: [
+              'v-for example'
+            ]
+          },
+          {
+            type: 'v-for',
+            props: {
+              id: 'looping',
+              loopOn: '{{ cities }}'
+            },
+            children: [
+              {
+                type: 'div',
+                children: [
+                  'This is element {{ loopingItem.name }} at position {{ loopingIndex }} : {{ name }}'
+                ]
+              }
             ]
           }
         ]
-      }
+      },
     ]
   };
   </script>
@@ -167,6 +208,18 @@
   .my-div {
     border: 1px solid #aaa;
     padding: 10px;
+  }
+  .native-btn {
+    background-color: aliceblue;
+    border-style: solid;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  .block {
+    display: block;
+  }
+  .random-native-input {
+    border-style: solid;
   }
   </style>
   
