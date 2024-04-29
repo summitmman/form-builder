@@ -5,11 +5,10 @@ import App from './App.vue';
 // Router
 import { router } from './router';
 // Vuetify
-import 'vuetify/styles';
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
 import { createVuetify } from 'vuetify';
-import * as components from 'vuetify/components';
-import * as directives from 'vuetify/directives';
+// styles
+import './style.css';
 
 // Create App
 const app = createApp(App);
@@ -26,8 +25,6 @@ const vuetify = createVuetify({
             mdi,
         },
     },
-    components,
-    directives,
 })
 app.use(vuetify);
 
