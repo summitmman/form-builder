@@ -155,13 +155,6 @@ const form: IForm = {
     //     'Benefits'
     //   ]
     // },
-    // {
-    //   type: 'InputText',
-    //   props: {
-    //     type: 'text',
-    //     'v-model': '{{ name }}'
-    //   }
-    // },
     {
       type: 'h2',
       children: [
@@ -210,69 +203,68 @@ const form: IForm = {
         label: 'Check'
       }
     },
-    // {
-    //   type: 'Accordion',
-    //   props: {
-    //     activeIndex: '{{ activeIndex }}'
-    //   },
-    //   children: [
-    //     // {
-    //     //   type: 'v-for',
-    //     //   props: {
-    //     //     id: 'myBenefits',
-    //     //     loopOn: '{{ benefits }}'
-    //     //   },
-    //     //   children: [
-    //         {
-    //           type: 'AccordionTab',
-    //           props: {
-    //             header: '{{ myBenefitsItem.title }}'
-    //           },
-    //           children: [
-    //             {
-    //               type: 'p',
-    //               props: {
-    //                 class: 'flex'
-    //               },
-    //               children: [
-    //                 'Dekhte hain yeh chalta hai ki nahi'
-    //                 // {
-    //                 //   type: 'div',
-    //                 //   children: [
-    //                 //     {
-    //                 //       type: 'img',
-    //                 //       props: {
-    //                 //         src: '{{ myBenefitsItem.icon }}',
-    //                 //         class: 'native-avatar'
-    //                 //       }
-    //                 //     }
-    //                 //   ]
-    //                 // },
-    //                 // {
-    //                 //   type: 'div',
-    //                 //   children: [
-    //                 //     {
-    //                 //       type: 'h4',
-    //                 //       children: [
-    //                 //         '{{ myBenefitsItem.title }}'
-    //                 //       ]
-    //                 //     },
-    //                 //     {
-    //                 //       type: 'div',
-    //                 //       children: [
-    //                 //         '{{ myBenefitsItem.subtitle }}'
-    //                 //       ]
-    //                 //     }
-    //                 //   ]
-    //                 // }
-    //               ]
-    //             }
-    //           ]
-    //         }
-    //     //   ]
-    //     // }
-    //   ]
-    // },
+    {
+      type: 'Accordion',
+      props: {
+        activeIndex: '{{ activeIndex }}'
+      },
+      children: [
+        {
+          type: 'v-for',
+          props: {
+            id: 'myBenefits',
+            loopOn: '{{ benefits }}'
+          },
+          children: [
+            {
+              type: 'AccordionTab',
+              props: {
+                header: '{{ myBenefitsItem.title }}'
+              },
+              children: [
+                {
+                  type: 'p',
+                  props: {
+                    class: 'flex'
+                  },
+                  children: [
+                    {
+                      type: 'div',
+                      children: [
+                        {
+                          type: 'img',
+                          props: {
+                            src: '{{ myBenefitsItem.icon }}',
+                            class: 'native-avatar'
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      type: 'div',
+                      children: [
+                        {
+                          type: 'h4',
+                          children: [
+                            '{{ myBenefitsItem.title }}'
+                          ]
+                        },
+                        {
+                          type: 'div',
+                          children: [
+                            '{{ myBenefitsItem.subtitle }}'
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       type: 'Card',
       children: [
