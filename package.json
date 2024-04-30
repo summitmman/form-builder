@@ -8,13 +8,16 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
-  "dependencies": { "lodash.get": "^4.4.2" },
+  "dependencies": {
+    "lodash.get": "^4.4.2"
+  },
   "peerDependencies": {
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@types/lodash.get": "^4.4.9",
     "@vitejs/plugin-vue": "^5.0.4",
+    "primevue": "^3.52.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vue-router": "4",

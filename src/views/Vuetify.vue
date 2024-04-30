@@ -13,7 +13,6 @@
 import { ref, Ref, ComputedRef, computed } from 'vue';
 import FormBuilder from '../formBuilder/FormBuilder.vue';
 import { IForm, GenericObject, EventMap } from '../formBuilder/shared/interfaces';
-import 'vuetify/styles';
 
 import * as components from 'vuetify/components';
 
@@ -315,42 +314,8 @@ const form: IForm = {
 };
 </script>
 
-<style>
+<style scoped>
 .main-body {
   padding: 20px;
-}
-.mt-2 {
-  margin-top: 2px;
-}
-.banner {
-  position: relative;
-  text-align: center;
-}
-.banner-img {
-  border-radius: 5px;
-  width: 100%;
-}
-.banner-text-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: calc(100vw * 0.04);
-  color: white;
-  display: inline-block;
-  padding: 10px;
-}
-.frosted-glass {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  border-radius: 5px;
-  background-color: rgba(0,0,0,0.3);
-  backdrop-filter: blur(3px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-.banner-text {
-  position: relative;
 }
 </style>

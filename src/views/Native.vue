@@ -1,35 +1,33 @@
 <template>
-    <div>
-      <FormBuilder
-        :form="form"
-        :widgetMap="widgetMap"
-        :eventMap="eventMap"
-        :reactiveVariableMap="reactiveVariableMap"
-      />
-      <div>
-        Outside form builder
-        <input type="text" class="random-native-input block" v-model="singleName" />
-        {{ singleName }}
-      </div>
+  <div>
+    <FormBuilder
+      :form="form"
+      :widgetMap="widgetMap"
+      :eventMap="eventMap"
+      :reactiveVariableMap="reactiveVariableMap"
+    />
+    <div class="boundary">
+      <h2>This section is outside page builder</h2>
+      <p>We will try to enter/change the Single Name/Pet Name</p>
+      <input type="text" class="native-input block" v-model="singleName" />
+      Your Single Name/Pet Name is "{{ singleName }}"
     </div>
-  </template>
+  </div>
+</template>
   
-  <script setup lang="ts">
+<script setup lang="ts">
   import { defineAsyncComponent, ref, Ref, ComputedRef, computed } from 'vue';
   import FormBuilder from '../formBuilder/FormBuilder.vue';
   import { IForm, GenericObject, EventMap } from '../formBuilder/shared/interfaces';
   
-  const singleName = ref('optical fiber');
+  const singleName = ref('Beta');
   const widgetMap = {
     Button: defineAsyncComponent(() => import(/* webpackChunkName: "Button" */ '../components/Button.vue')),
-    TextBox: defineAsyncComponent(() => import(/* webpackChunkName: "TextBox" */ '../components/TextBox.vue'))
+    Name: defineAsyncComponent(() => import(/* webpackChunkName: "Name" */ '../components/Name.vue'))
   };
   const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>): GenericObject<Function> => ({
-    handleAppClick: () => {
-      alert('Hello World');
-    },
     handleAppCustomClick: () => {
-      alert(`custom button alert ${ reactiveVariables.name?.value }`);
+      alert(`Hello ${ reactiveVariables.name?.value }`);
     },
     handleChange: (val: any) => {
       console.log('SUMIT LOG', val, reactiveVariables.surname?.value);
@@ -54,61 +52,165 @@
   const form: IForm = {
     id: 'sample-form',
     initialData: {
-      name: 'Hello',
-      surname: 'World'
+      name: 'Sumit',
+      surname: 'Man',
+      benefits: [
+        {
+          title: 'Get Rewards',
+          subtitle: 'Get rewards for every commit that you make',
+          icon: '/img/diamond.png'
+        },
+        {
+          title: 'Get Knowledge',
+          subtitle: 'Professionals will peer review your code and help you learn',
+          icon: '/img/deep-learning.png'
+        },
+        {
+          title: 'Build AI',
+          subtitle: 'Finally build AI bots which will help rule the world',
+          icon: '/img/robotics.png'
+        }
+      ],
     },
     children: [
       {
-        type: 'div',
-        props: {
-          class: 'my-div'
-        },
+        type: 'h1',
         children: [
-          'Hello World',
-          {
-            type: 'button',
-            props: {
-              class: 'native-btn ml-4'
-            },
-            events: {
-              click: 'handleAppClick'
-            },
-            children: [
-              'Nested Click me'
-            ]
-          }
-        ]
-      },
-      {
-        type: 'button',
-        props: {
-          class: 'native-btn'
-        },
-        events: {
-          click: 'handleAppClick'
-        },
-        children: [
-          'Click me'
-        ]
-      },
-      {
-        id: 'customButton',
-        type: 'Button',
-        events: {
-          click: 'handleAppCustomClick'
-        },
-        children: [
-          'Custom button'
+          'Native Demo'
         ]
       },
       {
         type: 'p',
         props: {
-          class: 'mt-5'
+          class: 'mb-10'
         },
+        children: [
+          'This page demonstrates the use of Page builder. Page builder can be used not only to create forms dynamically but also entire pages with mid-level complexity.'
+        ]
+      },
+      {
+        type: 'div',
+        props: {
+          class: 'banner mb-10'
+        },
+        children: [
+          {
+            type: 'img',
+            props: {
+              src: '/img/path.jpg',
+              class: 'banner-img'
+            }
+          },
+          {
+            type: 'h1',
+            props: {
+              class: 'banner-text-container'
+            },
+            children: [
+              {
+                type: 'div',
+                props: {
+                  class: 'frosted-glass'
+                }
+              },
+              {
+                type: 'div',
+                props: {
+                  class: 'banner-text'
+                },
+                children: [
+                  'PAGE BUILDER DEMO'
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        type: 'h2',
+        children: [
+          'Benefits'
+        ]
+      },
+      {
+        type: 'ul',
+        props: {
+          class: 'native-ul'
+        },
+        children: [
+          {
+            type: 'v-for',
+            props: {
+              id: 'myBenefits',
+              loopOn: '{{ benefits }}'
+            },
+            children: [
+              {
+                type: 'li',
+                children: [
+                  {
+                    type: 'div',
+                    props: {
+                      class: 'flex'
+                    },
+                    children: [
+                      {
+                        type: 'div',
+                        children: [
+                          {
+                            type: 'img',
+                            props: {
+                              src: '{{ myBenefitsItem.icon }}',
+                              class: 'native-avatar'
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        type: 'div',
+                        children: [
+                          {
+                            type: 'h4',
+                            children: [
+                              '{{ myBenefitsItem.title }}'
+                            ]
+                          },
+                          {
+                            type: 'div',
+                            children: [
+                              '{{ myBenefitsItem.subtitle }}'
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+              }
+            ]
+          }
+        ]
+      },
+      {
+        type: 'h2',
+        children: [
+          'Enter your name'
+        ]
+      },
+      {
+        type: 'p',
+        props: {
+          class: 'mb-10'
+        },
+        children: [
+          'just a simple form demo'
+        ]
+      },
+      {
+        type: 'p',
         children: [    
           {
-            type: 'TextBox',
+            type: 'Name',
             props: {
               type: 'text',
               'v-model': '{{ name }}',
@@ -119,17 +221,33 @@
               change: 'handleChange'
             }
           },
-          'This is the {{ name }} life {{ surname }} {{ singleName }}',
+          'From outside the custom textbox component we get the name "{{ name }}" surname "{{ surname }}"',
+          {
+            type: 'br'
+          },
+          'Pet name "{{ singleName }}" is just printed here',
           {
             type: 'Button',
             props: {
-              class: 'block'
+              class: 'block mb-10'
             },
             events: {
               click: 'handleAppCustomClick'
             },
             children: [
-              'Custom button'
+              'Custom button to say Hi'
+            ]
+          },
+          {
+            type: 'button',
+            props: {
+              class: 'block native-btn mb-10'
+            },
+            events: {
+              click: 'handleAppCustomClick'
+            },
+            children: [
+              'Native button to say Hi'
             ]
           }
         ]
@@ -137,11 +255,11 @@
       {
         type: 'div',
         props: {
-          class: 'my-div'
+          class: 'boundary'
         },
         children: [
           {
-            type: 'h3',
+            type: 'h2',
             children: [
               'v-if example',
             ]
@@ -156,17 +274,17 @@
                   props: {
                     condition: '{{ name }}',
                     vElseChildren: [
-                      'This text shows when both singleNameLength and name are invalid'
+                      'This text shows when both Single Name/Pet Name and First Name are invalid'
                     ]
                   },
                   children: [
-                    'This text only shows when singleNameLength is invalid and name: {{ name }} is valid'
+                    'This text only shows when Single Name/Pet Name is invalid but First Name : "{{ name }}" is valid'
                   ]
                 }
               ]
             },
             children: [
-              'This text only shows when singleNameLength: {{ singleNameLength }} is a valid',
+              'This text only shows when Single Name/Pet Name length : "{{ singleNameLength }}" is a valid',
             ]
           },
         ]
@@ -174,11 +292,11 @@
       {
         type: 'div',
         props: {
-          class: 'my-div'
+          class: 'boundary'
         },
         children: [
           {
-            type: 'h3',
+            type: 'h2',
             children: [
               'v-for example'
             ]
@@ -193,7 +311,7 @@
               {
                 type: 'div',
                 children: [
-                  'This is element {{ loopingItem.name }} at position {{ loopingIndex }} : {{ name }}'
+                  '{{ name }} has lived in {{loopingIndex}}:{{ loopingItem.name }}'
                 ]
               }
             ]
@@ -202,24 +320,15 @@
       },
     ]
   };
-  </script>
+</script>
   
-  <style>
+<style scoped>
   .my-div {
     border: 1px solid #aaa;
     padding: 10px;
   }
-  .native-btn {
-    background-color: aliceblue;
-    border-style: solid;
-    padding: 2px 4px;
-    border-radius: 4px;
-  }
-  .block {
-    display: block;
-  }
   .random-native-input {
     border-style: solid;
   }
-  </style>
+</style>
   

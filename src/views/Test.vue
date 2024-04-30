@@ -22,7 +22,7 @@
   const singleName = ref('optical fiber');
   const widgetMap = {
     Button: defineAsyncComponent(() => import(/* webpackChunkName: "Button" */ '../components/Button.vue')),
-    TextBox: defineAsyncComponent(() => import(/* webpackChunkName: "TextBox" */ '../components/TextBox.vue'))
+    Name: defineAsyncComponent(() => import(/* webpackChunkName: "Name" */ '../components/Name.vue'))
   };
   const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>): GenericObject<Function> => ({
     handleAppClick: () => {
@@ -108,7 +108,7 @@
         },
         children: [    
           {
-            type: 'TextBox',
+            type: 'Name',
             props: {
               type: 'text',
               'v-model': '{{ name }}',
