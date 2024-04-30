@@ -117,24 +117,81 @@ const form: IForm = {
                 {
                   type: 'div',
                   props: {
-                    class: 'relative'
+                    class: 'banner'
                   },
                   children: [
                     {
                       type: 'img',
                       props: {
-                        src: '/img/banner.png',
-                        class: 'br-4',
-                        width: '100%'
+                        src: '/img/path.jpg',
+                        class: 'banner-img'
                       }
                     },
                     {
                       type: 'h1',
                       props: {
-                        class: 'banner-text'
+                        class: 'banner-text-container'
                       },
                       children: [
-                        'PAGE BUILDER DEMO'
+                        {
+                          type: 'div',
+                          props: {
+                            class: 'frosted-glass'
+                          }
+                        },
+                        {
+                          type: 'div',
+                          props: {
+                            class: 'banner-text'
+                          },
+                          children: [
+                            'PAGE BUILDER DEMO'
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          type: 'v-row',
+          props: {
+            justify: 'start'
+          },
+          children: [
+            {
+              type: 'v-col',
+              children: [
+                {
+                  type: 'h2',
+                  children: [
+                    'Benefits'
+                  ]
+                },
+                {
+                  type: 'v-list',
+                  props: {
+                    lines: 'two'
+                  },
+                  children: [
+                    {
+                      type: 'v-for',
+                      props: {
+                        id: 'myBenefits',
+                        loopOn: '{{ benefits }}'
+                      },
+                      children: [
+                        {
+                          type: 'v-list-item',
+                          props: {
+                            title: '{{ myBenefitsItem.title }}',
+                            subtitle: '{{ myBenefitsItem.subtitle }}',
+                            'prepend-avatar': '{{ myBenefitsItem.icon }}'
+                          }
+                        }
                       ]
                     }
                   ]
@@ -250,44 +307,6 @@ const form: IForm = {
               ]
             }
           ]
-        },
-        {
-          type: 'v-row',
-          props: {
-            justify: 'start'
-          },
-          children: [
-            {
-              type: 'v-col',
-              children: [
-                {
-                  type: 'v-list',
-                  props: {
-                    lines: 'two'
-                  },
-                  children: [
-                    {
-                      type: 'v-for',
-                      props: {
-                        id: 'myBenefits',
-                        loopOn: '{{ benefits }}'
-                      },
-                      children: [
-                        {
-                          type: 'v-list-item',
-                          props: {
-                            title: '{{ myBenefitsItem.title }}',
-                            subtitle: '{{ myBenefitsItem.subtitle }}',
-                            'prepend-avatar': '{{ myBenefitsItem.icon }}'
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
         }
       ]
     },
@@ -300,32 +319,38 @@ const form: IForm = {
 .main-body {
   padding: 20px;
 }
-.mb-20 {
-  margin-bottom: 20px;
-}
 .mt-2 {
   margin-top: 2px;
 }
-.br-4 {
-  border-radius: 4px;
-}
-.relative {
+.banner {
   position: relative;
+  text-align: center;
+}
+.banner-img {
+  border-radius: 5px;
+  width: 100%;
+}
+.banner-text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: calc(100vw * 0.04);
+  color: white;
+  display: inline-block;
+  padding: 10px;
+}
+.frosted-glass {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,0.3);
+  backdrop-filter: blur(3px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 .banner-text {
-  /* position: absolute;
-  color: white;
-  top: calc(50% - 47px);
-  text-align: center;
-  width: 100%;
-  font-family: Dosis;
-  font-size: 60px; */
-
-  position: absolute;
-  color: white;
-  top: calc(50% - (-4px) - (0.5* 60px));
-  text-align: center;
-  width: 100%;
-  font-size: calc(0.5 * 60px);
+  position: relative;
 }
 </style>

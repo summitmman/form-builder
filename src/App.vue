@@ -24,6 +24,7 @@ nav {
   top: 0px;
   padding-left: 20px;
   background: #55d6aa;
+  z-index: 10;
 }
 
 nav ul {
