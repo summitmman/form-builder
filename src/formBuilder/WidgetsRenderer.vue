@@ -13,7 +13,7 @@ import _get from 'lodash.get';
 import { Widgets, GenericObject, DynamicStringSplit } from './shared/interfaces';
 import { regex } from './shared/constants';
 import WidgetRenderer from './WidgetRenderer.vue';
-import { getVariableAndParts, splitDynamicStr } from './shared/utils';
+import { splitDynamicStr } from './shared/utils';
 
 const DynamicString = defineAsyncComponent(() => import(/* webpackChunkName: "DynamicString" */ './DynamicString.vue'));
 const VIf = defineAsyncComponent(() => import(/* webpackChunkName: "VIf" */ './VIf.vue'));
@@ -41,7 +41,7 @@ const props = defineProps({
 const localWidgetMap = computed(() => ({
     ...props.widgetMap,
     'v-if': VIf,
-    'v-for': VFor
+    'v-for': VFor,
 }));
 
 // Handle all string to mapped object conversions here; of only current level

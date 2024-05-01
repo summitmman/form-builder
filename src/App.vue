@@ -4,7 +4,7 @@
       <ul>
         <li><RouterLink to="/">Native</RouterLink></li>
         <li><RouterLink to="/vuetify">Vuetify</RouterLink></li>
-        <li><RouterLink to="/primevue">Prime Vue</RouterLink></li>
+        <li><RouterLink to="/naiveui">Naive UI</RouterLink></li>
       </ul>
     </nav>
     <div class="body">

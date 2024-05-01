@@ -38,7 +38,7 @@ const widgetMap = {
 
 const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>): GenericObject<Function> => ({
   sayHi: () => {
-    alert(`Hi ${reactiveVariables.name?.value}!!!`);
+    alert(`Hi ${reactiveVariables.name?.value}!!!. This click also adds a dummy benefit "New Benefit"`);
     reactiveVariables.benefits?.value.push({
       title: 'New Benefit',
       subtitle: 'Get rewards for new benefit',
@@ -144,7 +144,7 @@ const form: IForm = {
                             class: 'banner-text'
                           },
                           children: [
-                            'PAGE BUILDER DEMO'
+                            'PAGE BUILDER DEMO - Vuetify'
                           ]
                         }
                       ]

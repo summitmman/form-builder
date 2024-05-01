@@ -1,8 +1,7 @@
 @import url('vuetify/styles');
-@import url('primevue/resources/themes/aura-light-green/theme.css');
 
 * {
-  font-family: 'Jost';
+  font-family: 'Poppins';
 }
 body {
   margin: 0px;
@@ -27,11 +26,17 @@ body {
 .mb-20 {
   margin-bottom: 20px !important;
 }
+.ml-10 {
+  margin-left: 10px !important;
+}
 .block {
   display: block;
 }
 .flex {
   display: flex;
+}
+.align-items-center {
+  align-items: center;
 }
 
 .banner {
@@ -58,7 +63,7 @@ body {
   height: 100%;
   top: 0px;
   border-radius: 5px;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.2);
   backdrop-filter: blur(3px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }

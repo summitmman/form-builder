@@ -7,8 +7,6 @@ import { router } from './router';
 // Vuetify
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
 import { createVuetify } from 'vuetify';
-// PrimeVue
-import PrimeVue from 'primevue/config';
 // styles
 import './style.css';
 
@@ -29,8 +27,6 @@ const vuetify = createVuetify({
     },
 })
 app.use(vuetify);
-// PrimeVue
-app.use(PrimeVue);
 
 // Mount
 app.mount('#app');

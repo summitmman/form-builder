@@ -119,7 +119,7 @@
                   class: 'banner-text'
                 },
                 children: [
-                  'PAGE BUILDER DEMO'
+                  'PAGE BUILDER DEMO - Native'
                 ]
               }
             ]

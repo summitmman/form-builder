@@ -12,9 +12,9 @@ const routes = [
         component: () => import('../views/Vuetify.vue')
     },
     {
-        path: '/primevue',
-        name: 'primevue',
-        component: () => import('../views/PrimeVue.vue')
+        path: '/naiveui',
+        name: 'naiveui',
+        component: () => import('../views/NaiveUI.vue')
     },
     {
         path: '/test',
