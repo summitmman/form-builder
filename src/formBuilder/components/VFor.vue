@@ -10,9 +10,9 @@
 </template>
 <script setup lang="ts">
 import { Ref, ComputedRef, defineAsyncComponent } from 'vue';
-import { Widgets, GenericObject } from './shared/interfaces';
+import { Widgets, GenericObject } from '../shared/interfaces';
 
-const WidgetsRenderer = defineAsyncComponent(() => import(/* webpackChunkName: "WidgetsRenderer" */ './WidgetsRenderer.vue'));
+const WidgetsRenderer = defineAsyncComponent(() => import(/* webpackChunkName: "WidgetsRenderer" */ '../WidgetsRenderer.vue'));
 
 const props = defineProps({
     id: {
