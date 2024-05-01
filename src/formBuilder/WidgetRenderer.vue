@@ -4,6 +4,14 @@
         v-bind="propsBindings"
         v-on="props.widget.events ?? {}"
     >
+        <template v-for="(slotName, index) in Object.keys(props.widget.slots ?? {})" :key="slotName + index" #[slotName]="slotProps">
+            <WidgetsRenderer
+                :widgets="JSON.parse(JSON.stringify((props.widget.slots ?? {})[slotName]))"
+                :widgetMap="props.widgetMap"
+                :eventMap="props.eventMap"
+                :reactiveVariableMap="{ ...props.reactiveVariableMap, [props.widget.props?.id ?? '' + slotName + 'SlotProps']: slotProps }"
+            />
+        </template>
         <WidgetsRenderer
             v-if="props.widget.children"
             :widgets="props.widget.children"

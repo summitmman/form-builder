@@ -12,5 +12,5 @@ const props = defineProps({
 });
 // This is needed so that we can directly expose the str reactive variable
 // so that vue can open it
-let tempStr = props.str;
+const tempStr = props.str;
 </script>

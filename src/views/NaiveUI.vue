@@ -189,6 +189,11 @@ const form: IForm = {
                 title: '{{ myBenefitsItem.title }}',
                 name: '{{ myBenefitsIndex }}'
               },
+              slots: {
+                'header-extra': [
+                  'This is {{ header-extraSlotProps.collapsed }}'
+                ]
+              },
               children: [
                 {
                   type: 'div',
@@ -230,6 +235,25 @@ const form: IForm = {
       type: 'NCard',
       props: {
         title: 'Enter your name (just a simple form demo)'
+      },
+      slots: {
+        'header-extra': [
+          'just a simple form demo'
+        ],
+        'action': [
+          {
+            type: 'NButton',
+            props: {
+              type: 'primary'
+            },
+            events: {
+              click: 'sayHi'
+            },
+            children: [
+              'Click to say Hi'
+            ]
+          }
+        ]
       },
       children: [
         {
@@ -329,18 +353,6 @@ const form: IForm = {
                 '{{ city }}'
               ]
             }
-          ]
-        },
-        {
-          type: 'NButton',
-          props: {
-            type: 'primary'
-          },
-          events: {
-            click: 'sayHi'
-          },
-          children: [
-            'Click to say Hi'
           ]
         }
       ]
