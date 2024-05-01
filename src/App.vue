@@ -25,8 +25,18 @@ import { RouterView, RouterLink } from 'vue-router';
 }
 .body {
   margin-top: 50px;
-  width: 80%;
   margin: 50px auto 0px;
+  width: 50%;
+}
+@media only screen and (max-width: 1200px) {
+  .body {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 1500px) {
+  .body {
+    width: 60%;
+  }
 }
 
 nav {
