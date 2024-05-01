@@ -111,7 +111,7 @@ const form: IForm = {
     {
       type: 'h1',
       children: [
-        'PrimeVue Demo'
+        'Naive UI Demo'
       ]
     },
     {
