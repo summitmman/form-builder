@@ -16,8 +16,8 @@ import WidgetRenderer from './WidgetRenderer.vue';
 import { splitDynamicStr } from './shared/utils';
 
 const DynamicString = defineAsyncComponent(() => import(/* webpackChunkName: "DynamicString" */ './DynamicString.vue'));
-const VIf = defineAsyncComponent(() => import(/* webpackChunkName: "VIf" */ './VIf.vue'));
-const VFor = defineAsyncComponent(() => import(/* webpackChunkName: "VFor" */ './VFor.vue'));
+const VIf = defineAsyncComponent(() => import(/* webpackChunkName: "VIf" */ './components/VIf.vue'));
+const VFor = defineAsyncComponent(() => import(/* webpackChunkName: "VFor" */ './components/VFor.vue'));
 
 const props = defineProps({
     widgets: {
