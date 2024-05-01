@@ -27,7 +27,7 @@ This template should help get you started developing with Vue 3 and TypeScript i
 - [X] check need for id
 - [X] make things presentable; add a demo page
 - [X] manage reactive in props with string as well
-- [ ] support for named slots
+- [X] support for named slots
 
 
 ### Findings

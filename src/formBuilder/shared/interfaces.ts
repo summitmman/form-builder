@@ -10,6 +10,7 @@ export interface IWidget<T = Function> {
     props?: GenericObject;
     events?: GenericObject<T>;
     children?: Widgets<T>;
+    slots?: GenericObject<Widgets<T>>;
 }
 
 export interface IForm {

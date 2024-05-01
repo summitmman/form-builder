@@ -21,9 +21,8 @@ const props = defineProps({
     }
 });
 
-const splitStrArrLocal = splitDynamicStr(props.str, props.reactiveVariableMap);
-
 const splitStrArr: ComputedRef<Array<string | Ref | ComputedRef>> = computed(() => {
+    const splitStrArrLocal = splitDynamicStr(props.str, props.reactiveVariableMap);
     return splitStrArrLocal.map(item => {
         if (typeof item === 'string') {
             return item;
@@ -36,9 +35,9 @@ const splitStrArr: ComputedRef<Array<string | Ref | ComputedRef>> = computed(() 
         const { rVar, theRest } = item;
         if (theRest) {
             if (isRef(rVar)) {
-                return _get(rVar.value, theRest);
+                return computed(() => _get(rVar.value, theRest));
             }
-            return _get(rVar, theRest);
+            return computed(() => _get(rVar, theRest));
         }
         else
             return rVar;
