@@ -1,8 +1,14 @@
 {
-  "name": "form-builder",
-  "private": true,
-  "version": "0.0.0",
+  "name": "summitmman-form-builder",
+  "private": false,
+  "version": "0.0.7",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
@@ -20,6 +26,7 @@
     "naive-ui": "^2.38.1",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-plugin-dts": "^3.9.0",
     "vue-router": "4",
     "vue-tsc": "^2.0.6",
     "vuetify": "^3.5.17"
