@@ -1,12 +1,23 @@
 <template>
-  <div class="main-body">
-    <FormBuilder
-      v-if="form"
-      :form="form"
-      :widgetMap="widgetMap"
-      :eventMap="eventMap"
-      :reactiveVariableMap="reactiveVariableMap"
-    />
+  <div class="flex">
+    <div class="w-50 flex-no-grow">
+      <FormBuilder
+        v-if="form"
+        :form="form"
+        :widgetMap="widgetMap"
+        :eventMap="eventMap"
+        :reactiveVariableMap="reactiveVariableMap"
+      />
+    </div>
+    <div class="json-section">
+      <h1>JSON</h1>
+      <JsonViewer
+        v-if="jsonData"
+        :value="jsonData"
+        expandDepth="2"
+        theme="jv-light"
+      />
+    </div>
   </div>
 </template>
 
@@ -16,6 +27,8 @@ import FormBuilder from '../formBuilder/FormBuilder.vue';
 import { IForm, GenericObject, EventMap } from '../formBuilder/shared/interfaces';
 
 import * as components from 'vuetify/components';
+
+const jsonData = ref(null);
 
 // Define here or globally
 const widgetMap = {
@@ -56,6 +69,7 @@ const reactiveVariableMap = {
 
 const form: Ref<IForm | null> = ref(null);
 fetch(`${import.meta.env.BASE_URL}/mocks/vuetify.json`).then(response => response.json()).then(response => {
+  jsonData.value = JSON.parse(JSON.stringify(response));
   form.value = response;
 });
 </script>

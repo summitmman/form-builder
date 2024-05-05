@@ -24,9 +24,9 @@ import { RouterView, RouterLink } from 'vue-router';
   padding: 0;
 }
 .body {
-  margin-top: 50px;
-  margin: 50px auto 0px;
-  width: 50%;
+  /* margin-top: 50px; */
+  margin: 50px 20px 0px;
+  /* width: 50%; */
 }
 @media only screen and (max-width: 1200px) {
   .body {

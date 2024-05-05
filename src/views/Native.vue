@@ -1,17 +1,28 @@
 <template>
-  <div>
-    <FormBuilder
-      v-if="form"
-      :form="form ?? {id: '', children: []}"
-      :widgetMap="widgetMap"
-      :eventMap="eventMap"
-      :reactiveVariableMap="reactiveVariableMap"
-    />
-    <div class="boundary">
-      <h2>This section is outside page builder</h2>
-      <p>We will try to enter/change the Single Name/Pet Name</p>
-      <input type="text" class="native-input block" v-model="singleName" />
-      Your Single Name/Pet Name is "{{ singleName }}"
+  <div class="flex">
+    <div class="w-50 flex-no-grow">
+      <FormBuilder
+        v-if="form"
+        :form="form ?? {id: '', children: []}"
+        :widgetMap="widgetMap"
+        :eventMap="eventMap"
+        :reactiveVariableMap="reactiveVariableMap"
+      />
+      <div class="boundary">
+        <h2>This section is outside page builder</h2>
+        <p>We will try to enter/change the Single Name/Pet Name</p>
+        <input type="text" class="native-input block" v-model="singleName" />
+        Your Single Name/Pet Name is "{{ singleName }}"
+      </div>
+    </div>
+    <div class="json-section">
+      <h1>JSON</h1>
+      <JsonViewer
+        v-if="jsonData"
+        :value="jsonData"
+        expandDepth="2"
+        theme="jv-light"
+      />
     </div>
   </div>
 </template>
@@ -21,6 +32,7 @@
   import FormBuilder from '../formBuilder/FormBuilder.vue';
   import { IForm, GenericObject, EventMap } from '../formBuilder/shared/interfaces';
   
+  const jsonData = ref(null);
   const singleName = ref('Beta');
   const widgetMap = {
     Button: defineAsyncComponent(() => import(/* webpackChunkName: "Button" */ '../components/Button.vue')),
@@ -52,6 +64,7 @@
   
   const form: Ref<IForm | null> = ref(null);
   fetch(`${import.meta.env.BASE_URL}/mocks/native.json`).then(response => response.json()).then(response => {
+    jsonData.value = JSON.parse(JSON.stringify(response));
     form.value = response;
   });
 </script>

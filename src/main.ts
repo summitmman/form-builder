@@ -7,6 +7,9 @@ import { router } from './router';
 // Vuetify
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
 import { createVuetify } from 'vuetify';
+// JSON Viewer
+import JsonViewer from 'vue3-json-viewer';
+import "vue3-json-viewer/dist/index.css";
 // styles
 import './style.css';
 
@@ -27,6 +30,7 @@ const vuetify = createVuetify({
     },
 })
 app.use(vuetify);
+app.use(JsonViewer);
 
 // Mount
 app.mount('#app');

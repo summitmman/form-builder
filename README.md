@@ -3,6 +3,9 @@
 Form Builder lets you create a page through JSON. You will be able to create any native or custom vue component with attributes, event bindings and nested children. This library can be used to create moderately complex pages on the go with some level of reactivity support.
 Use case: If a page in a user's UI journey needs to be customized (for each user, or service provider or any other marker) at runtime, you may store the JSON schema as per customizations in the database and let the Form Builder render the page for you.
 
+### Demo
+https://summitmman.github.io/form-builder/
+
 ## Features
 
 - [X] Render any html element

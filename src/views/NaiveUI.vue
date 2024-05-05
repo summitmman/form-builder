@@ -1,12 +1,23 @@
 <template>
-  <div class="main-body">
-    <FormBuilder
-      v-if="form"
-      :form="form"
-      :widgetMap="widgetMap"
-      :eventMap="eventMap"
-      :reactiveVariableMap="reactiveVariableMap"
-    />
+  <div class="flex">
+    <div class="w-50 flex-no-grow">
+      <FormBuilder
+        v-if="form"
+        :form="form"
+        :widgetMap="widgetMap"
+        :eventMap="eventMap"
+        :reactiveVariableMap="reactiveVariableMap"
+      />
+    </div>
+    <div class="json-section">
+      <h1>JSON</h1>
+      <JsonViewer
+        v-if="jsonData"
+        :value="jsonData"
+        expandDepth="2"
+        theme="jv-light"
+      />
+    </div>
   </div>
 </template>
 
@@ -26,6 +37,8 @@ import {
   NRadioGroup,
   NSpace
 } from 'naive-ui';
+
+const jsonData = ref(null);
 
 // Define here or globally
 const widgetMap = {
@@ -59,6 +72,7 @@ const reactiveVariableMap = {
 };
 const form: Ref<IForm | null> = ref(null);
 fetch(`${import.meta.env.BASE_URL}/mocks/naiveui.json`).then(response => response.json()).then(response => {
+  jsonData.value = JSON.parse(JSON.stringify(response));
   form.value = response;
 });
 </script>
