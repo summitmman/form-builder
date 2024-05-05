@@ -1,13 +1,13 @@
 <template>
     <WidgetsRenderer
-        :widgets="props.form.children"
+        :widgets="localForm.children"
         :widgetMap="props.widgetMap"
         :eventMap="newEventMap"
         :reactiveVariableMap="newReactiveVariableMap"
     />
 </template>
 <script setup lang="ts">
-import { ref, Ref, ComputedRef, isRef, computed } from 'vue';
+import { ref, Ref, ComputedRef, isRef, computed, unref } from 'vue';
 import { IForm, GenericObject, EventMap } from './shared/interfaces';
 import WidgetsRenderer from './WidgetsRenderer.vue';
 
@@ -30,18 +30,23 @@ const props = defineProps({
     }
 });
 
+// Need to do this if props.form is a ref variable.
+// Ref form would cause form to recursively update itself
+// possible reason is that props.form.initialData is linked, maybe
+const localForm = JSON.parse(JSON.stringify(props.form));
+
 const newReactiveVariableMap = computed(() => {
-    if (props.form.initialData) {
-        Object.keys(props.form.initialData).forEach((key) => {
-            if (!props.form.initialData) {
+    if (localForm.initialData) {
+        Object.keys(localForm.initialData).forEach((key) => {
+            if (!localForm.initialData) {
                 return;
             }
-            if (!isRef(props.form.initialData[key])) {
-                props.form.initialData[key] = ref(props.form.initialData[key]);
+            if (!isRef(localForm.initialData[key])) {
+                localForm.initialData[key] = ref(localForm.initialData[key]);
             }
         });
         return {
-            ...props.form.initialData,
+            ...localForm.initialData,
             ...props.reactiveVariableMap
         };
     }

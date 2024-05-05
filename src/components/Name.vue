@@ -6,6 +6,7 @@
         <input class="native-input" type="text" v-model="surname" />
         <div>You have entered "{{ name }} {{ surname }}" using v-model and v-model:surname</div>
         <div>Single Name or Pet Name "{{ props.singleName }}" comes from outside</div>
+        <slot name="footer" message="message from slotProps"></slot>
     </div>
 </template>
 <script setup lang="ts">

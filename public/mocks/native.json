@@ -168,6 +168,25 @@
                     },
                     "events": {
                         "change": "handleChange"
+                    },
+                    "slots": {
+                        "footer": [
+                            "This footer is a ",
+                            {
+                                "type": "b",
+                                "children": [
+                                    "named slot example "
+                                ]
+                            },
+                            "showing last name '{{ surname }}' and ",
+                            {
+                                "type": "b",
+                                "children": [
+                                    "slotProps "
+                                ]
+                            },
+                            "'{{ footerSlotProps.message }}'"
+                        ]
                     }
                 },
                 "From outside the custom textbox component we get the name \"{{ name }}\" surname \"{{ surname }}\"",
