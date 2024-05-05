@@ -7,17 +7,17 @@
             {
                 "title": "Get Rewards",
                 "subtitle": "Get rewards for every commit that you make",
-                "icon": "/img/diamond.png"
+                "icon": "/form-builder/img/diamond.png"
             },
             {
                 "title": "Get Knowledge",
                 "subtitle": "Professionals will peer review your code and help you learn",
-                "icon": "/img/deep-learning.png"
+                "icon": "/form-builder/img/deep-learning.png"
             },
             {
                 "title": "Build AI",
                 "subtitle": "Finally build AI bots which will help rule the world",
-                "icon": "/img/robotics.png"
+                "icon": "/form-builder/img/robotics.png"
             }
         ]
     },
@@ -46,7 +46,7 @@
                 {
                     "type": "img",
                     "props": {
-                        "src": "/img/path.jpg",
+                        "src": "/form-builder/img/path.jpg",
                         "class": "banner-img"
                     }
                 },

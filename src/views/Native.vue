@@ -51,7 +51,7 @@
   };
   
   const form: Ref<IForm | null> = ref(null);
-  fetch('/mocks/native.json').then(response => response.json()).then(response => {
+  fetch(`${import.meta.env.BASE_URL}/mocks/native.json`).then(response => response.json()).then(response => {
     form.value = response;
   });
 </script>

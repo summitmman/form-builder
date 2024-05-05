@@ -2,9 +2,9 @@
   <div class="container">
     <nav>
       <ul>
-        <li><RouterLink to="/">Native</RouterLink></li>
-        <li><RouterLink to="/vuetify">Vuetify</RouterLink></li>
-        <li><RouterLink to="/naiveui">Naive UI</RouterLink></li>
+        <li><RouterLink :to="{name: 'native'}">Native</RouterLink></li>
+        <li><RouterLink :to="{name: 'vuetify'}">Vuetify</RouterLink></li>
+        <li><RouterLink :to="{name: 'naiveui'}">Naive UI</RouterLink></li>
       </ul>
     </nav>
     <div class="body">

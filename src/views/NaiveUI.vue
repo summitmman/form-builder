@@ -47,7 +47,7 @@ const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>)
     reactiveVariables.benefits?.value.push({
       title: 'New Benefit',
       subtitle: 'Get rewards for new benefit',
-      icon: '/img/diamond.png'
+      icon: `${import.meta.env.BASE_URL}/img/diamond.png`
     });
   }
 });
@@ -58,7 +58,7 @@ const reactiveVariableMap = {
   nameHint: computed(() => `You have entered: ${name.value}`)
 };
 const form: Ref<IForm | null> = ref(null);
-fetch('/mocks/naiveui.json').then(response => response.json()).then(response => {
+fetch(`${import.meta.env.BASE_URL}/mocks/naiveui.json`).then(response => response.json()).then(response => {
   form.value = response;
 });
 </script>
