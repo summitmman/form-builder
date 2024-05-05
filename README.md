@@ -1,34 +1,145 @@
-# Vue 3 + TypeScript + Vite
+# Form Builder
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Form Builder lets you create a page through JSON. You will be able to create any native or custom vue component with attributes, event bindings and nested children. This library can be used to create moderately complex pages on the go with some level of reactivity support.
+Use case: If a page in a user's UI journey needs to be customized (for each user, or service provider or any other marker) at runtime, you may store the JSON schema as per customizations in the database and let the Form Builder render the page for you.
 
-## Recommended Setup
+## Features
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
-
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
-
-### TODO:
 - [X] Render any html element
 - [X] Render custom vue component
-- [X] Pass props
-- [X] Pass events
+- [X] Props support
+- [X] Events support with access to reactive variables
 - [X] v-model support (only supported for custom vue components and not native html ones)
-- [X] multiple v-model support
-- [X] dynamic text support
-- [X] dynamic props support
-- [X] manage typeof string dependency
-- [X] Support IForm to give initial set of ref variables
-- [X] Functions to have access to these ref variables
+- [X] Multiple v-model support
+- [X] Dynamic text support
+- [X] Dynamic props support
+- [X] Named slots
+- [X] Initial set of reactive variables from JSON
 - [X] v-if
-- [X] v-for
-- [X] loop variables accessibility
-- [X] nested ref variables in template
-- [X] check need for id
-- [X] make things presentable; add a demo page
-- [X] manage reactive in props with string as well
-- [X] support for named slots
+- [X] v-for with access to loop variables
+- [X] Nested ref variables in template
+- [X] Use any component library
 
+## Basic usage
+
+1. In Terminal
+```
+npm install summitmman-form-builder
+```
+2. In main.ts
+```
+import FormBuilder from 'summitmman-form-builder';
+
+app.use(FormBuilder);
+```
+3. Create form schema which complies to IForm
+```
+import { IForm } from 'summitmman-form-builder';
+```
+4. Create widgetMap, which is a mapping of string keys to vue components. These keys are used in the form JSON schema. Components can be lazily loaded and mapped. If the components to be used are globally imported then there is no need of adding it to the widgetMap
+```
+const widgetMap = {
+    Button: defineAsyncComponent(() => import(/* webpackChunkName: "Button" */ './components/Button.vue')),
+    Name: defineAsyncComponent(() => import(/* webpackChunkName: "Name" */ './components/Name.vue'))
+};
+```
+5. Create set of reactive variables. Note: the initialData that you pass through the JSON form schema are also added to this set.
+```
+const singleName = ref('Sumit');
+const reactiveVariableMap = {
+    singleName,
+    singleNameLength: computed(() => singleName.value.length),
+    cities: ref([
+      {
+        name: 'Mumbai',
+      },
+      {
+        name: 'Bengaluru'
+      }
+    ])
+};
+```
+6. Create eventMap, which is a mapping of string keys to functions. Each of these functions will have access to the set of reactive variables powered by Form Builder
+```
+const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>): GenericObject<Function> => ({
+    handleAppCustomClick: () => {
+      alert(`Hello ${ reactiveVariables.name?.value }`);
+    },
+    handleChange: (val: any) => {
+      console.log('LOG', val, reactiveVariables.surname?.value);
+    },
+    singleNameLengthFn: () => {
+      return reactiveVariables.singleNameLength?.value;
+    }
+});
+```
+## Other supported features
+1. v-if
+```
+{
+    type: 'v-if',
+    props: {
+        condition: '{{ singleNameLength }}',
+        vElseChildren: [
+        {
+            type: 'v-if',
+            props: {
+            condition: '{{ name }}',
+            vElseChildren: [
+                'This text shows when both Single Name/Pet Name and First Name are invalid'
+            ]
+            },
+            children: [
+            'This text only shows when Single Name/Pet Name is invalid but First Name : "{{ name }}" is valid'
+            ]
+        }
+        ]
+    },
+    children: [
+        'This text only shows when Single Name/Pet Name length : "{{ singleNameLength }}" is a valid',
+    ]
+}
+```
+2. v-for
+```
+{
+    type: 'v-for',
+    props: {
+        id: 'looping',
+        loopOn: '{{ cities }}'
+    },
+    children: [
+        {
+        type: 'div',
+        children: [
+            '{{ name }} has lived in {{loopingIndex}}:{{ loopingItem.name }}'
+        ]
+        }
+    ]
+}
+```
+3. Named slots
+```
+"slots": {
+    "footer": [
+        "This footer is a ",
+        {
+            "type": "b",
+            "children": [
+                "named slot example "
+            ]
+        },
+        "showing last name '{{ surname }}' and ",
+        {
+            "type": "b",
+            "children": [
+                "slotProps "
+            ]
+        },
+        "'{{ footerSlotProps.message }}'"
+    ]
+}
+```
 
 ### Findings
 Ref when passed through an object and not directly returned to the template does not get opened by vue
