@@ -1,7 +1,7 @@
 {
   "name": "summitmman-form-builder",
   "private": false,
-  "version": "0.0.12",
+  "version": "0.0.13",
   "type": "module",
   "files": [
     "dist"
@@ -14,7 +14,6 @@
     "build": "vue-tsc && vite build --mode lib",
     "build:app": "vue-tsc && vite build",
     "preview": "vite preview",
-    "publish": "yarn build && npm publish",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
