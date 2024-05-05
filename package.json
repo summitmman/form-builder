@@ -11,8 +11,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "build": "vue-tsc && vite build --mode lib",
+    "build:app": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "publish": "yarn build && npm publish"
   },
   "dependencies": {
     "lodash.get": "^4.4.2"
