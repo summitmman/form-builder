@@ -12,8 +12,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build --mode lib",
-    "build:app": "vue-tsc && vite build",
     "preview": "vite preview",
+    "predeploy": "vue-tsc && vite build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
