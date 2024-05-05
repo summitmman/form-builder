@@ -50,12 +50,12 @@ const reactiveVariableMap = {
     singleName,
     singleNameLength: computed(() => singleName.value.length),
     cities: ref([
-      {
-        name: 'Mumbai',
-      },
-      {
-        name: 'Bengaluru'
-      }
+        {
+            name: 'Mumbai',
+        },
+        {
+            name: 'Bengaluru'
+        }
     ])
 };
 ```
@@ -63,15 +63,24 @@ const reactiveVariableMap = {
 ```
 const eventMap: EventMap = (reactiveVariables: GenericObject<Ref | ComputedRef>): GenericObject<Function> => ({
     handleAppCustomClick: () => {
-      alert(`Hello ${ reactiveVariables.name?.value }`);
+        alert(`Hello ${ reactiveVariables.name?.value }`);
     },
     handleChange: (val: any) => {
-      console.log('LOG', val, reactiveVariables.surname?.value);
+        console.log('LOG', val, reactiveVariables.surname?.value);
     },
     singleNameLengthFn: () => {
-      return reactiveVariables.singleNameLength?.value;
+        return reactiveVariables.singleNameLength?.value;
     }
 });
+```
+7. Add to template
+```
+<FormBuilder
+    :form="form"
+    :widgetMap="widgetMap"
+    :eventMap="eventMap"
+    :reactiveVariableMap="reactiveVariableMap"
+/>
 ```
 ## Other supported features
 1. v-if
